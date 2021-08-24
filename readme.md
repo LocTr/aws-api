@@ -6,7 +6,7 @@
 
 
 #### all book
-[invoke api](https://iz2l444w63.execute-api.ap-southeast-1.amazonaws.com/test/)
+[invoke api](https://iz2l444w63.execute-api.ap-southeast-1.amazonaws.com/test/all-book)
 
 response:
 ```
@@ -17,7 +17,7 @@ response:
 ```
 
 #### add book
-[invoke api](https://iz2l444w63.execute-api.ap-southeast-1.amazonaws.com/test/)
+[invoke api](https://iz2l444w63.execute-api.ap-southeast-1.amazonaws.com/test/add-book)
 
 POST method
 ```
