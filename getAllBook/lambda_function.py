@@ -1,29 +1,34 @@
+import json
 import boto3
+import logging
 
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('Book')
+logging.getLogger().setLevel(logging.DEBUG)
+
+def error_response(statusCode, body):
+    logging.debug(event)
+    return {
+        'statusCode': statusCode,
+        'body': json.dumps(body)
+    }
+def success_response(statusCode, body):
+    return {
+        'statusCode': statusCode,
+        'body': json.dumps(body)
+    }
 
 def lambda_handler(event, context):
+    logging.debug(event)
     try:
-        result = table.update_item(Key={
-            'id': event['id'],
-        },
-        UpdateExpression='SET title = :title, author = :author',
-        ExpressionAttributeValues={
-            ':title' : event['title'],
-            ':author' : event['author']
-        }
-        )
+        response = table.scan()
+
+        items = response['Items']
+    
         return {
             'statusCode': 200,
-            'body': 'book updated'
+            'body': json.dumps(items)
         }
-    except KeyError as err:
-        return{
-            'statusCode': 400,
-            'body': 'book does not exist'
-        }
-    return {
-        'statusCode': 404,
-        'body': 'Unexpected error'
-    }
+    except:
+        logging.critical(event)
+        return error_response(404, 'Unexpected Error')
